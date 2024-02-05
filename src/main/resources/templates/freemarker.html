@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>404未找到</title>
+    <link rel="stylesheet" href="../static/lib/layui-v2.3.0/layui/css/layui.css">
+    <link rel="stylesheet" href="../static/css/common.css">
+    <style>
+        .bdc-container{
+            height: 100%;
+            background: #fff;
+            position: relative;
+        }
+        .bdc-content{
+            position: absolute;
+            width: 100%;
+            top:50%;
+            transform: translateY(-50%);
+        }
+
+        .block-inline{
+            display: inline-block;
+        }
+
+        .bdc-success-msg{
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        .msg-img{
+            text-align: right;
+        }
+
+        .msg-tip{
+            text-align: left;
+            padding-left: 30px;;
+        }
+
+        .msg-tip p{
+            line-height: 50px;;
+        }
+    </style>
+    <script src="../static/lib/layui-v2.3.0/layui/layui.js"></script>
+    <script src="../static/lib/jquery.min.js"></script>
+    <script src="../static/js/common.js"></script>
+    <script src="../static/js/header.js"></script>
+</head>
+<body>
+<!--头部logo以及导航开始-->
+<div class="header">
+</div>
+<!--头部logo以及导航结束-->
+
+<!-- 内容部分开始 -->
+<div class="bdc-container">
+    <!--信息列表-->
+    <div class="bdc-content">
+        <div class="bdc-success-msg">
+            <div class="block-inline msg-img">
+                <img src="../static/images/404.png">
+            </div>
+            <div class="block-inline msg-tip">
+                <p>这个页面打不开了</p>
+            </div>
+            <i class="clearfix"></i>
+        </div>
+    </div>
+</div>
+<!-- 内容部分结束 -->
+
+<!-- 尾部开始 -->
+<div class="footer">
+</div>
+<!-- 尾部结束 -->
+</body>
+</html>

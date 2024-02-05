@@ -1,0 +1,74 @@
+page-parameter:
+  default:
+    pageSize: 10
+  max:
+    pageSize: 50
+
+repeat:
+  submission:
+    expire: 120
+
+server:
+  port: 9000
+
+mybatis:
+  mapper-locations: classpath:conf/mybatis/mapper/*.xml
+  config-location: classpath:conf/mybatis/mybatis-configuration.xml
+
+spring:
+  elasticsearch:
+    rest:
+      uris: http://123.207.210.78:9200
+  redis:
+    redisson:
+      config: classpath:redisson.yml
+    host: 127.0.0.1
+    port: 6379
+    password:
+    database: 0
+    jedis:
+      pool:
+        max-active: 1000
+        max-wait: -1ms
+        max-idle: 10
+        min-idle: 5
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    read:
+      url: jdbc:mysql://10.10.77.220:3306/icp-cloud?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+      username: root
+      password: zsrj@2022
+      driverClassName: com.mysql.jdbc.Driver
+    write:
+      url: jdbc:mysql://10.10.77.220:3306/icp-cloud?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+      username: root
+      password: zsrj@2022
+      driverClassName: com.mysql.jdbc.Driver
+  cloud:
+    gateway:
+      enabled: true
+      discovery:
+        locator:
+          lower-case-service-id: true
+      routes:
+        # Add your routes here.
+        - id: api_route
+          uri: http://127.0.0.1:80/
+          predicates:
+            - Path=/api/**
+          filters:
+#            - 省略第一个路径地址api
+            - StripPrefix=1
+#            - 把请求路径中的api替换成空
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+#        - id: test_route
+#          uri: http://127.0.0.1:9000
+#          predicates:
+#            - Path=/api/test/**
+#          filters:
+#            - RewritePath=/api/test/(?<segment>.*), /$\{segment}
+
+mica:
+  xss:
+    exclude-patterns:
+    enabled: true
