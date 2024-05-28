@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.util;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;

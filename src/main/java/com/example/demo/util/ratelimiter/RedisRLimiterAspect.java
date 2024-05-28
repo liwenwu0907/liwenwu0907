@@ -1,6 +1,6 @@
 package com.example.demo.util.ratelimiter;
 
-import com.example.demo.IpUtils;
+import com.example.demo.util.IpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;

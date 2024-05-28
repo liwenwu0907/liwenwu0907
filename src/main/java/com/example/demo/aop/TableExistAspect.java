@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Order(1)
 public class TableExistAspect {
 
-    @Pointcut("@annotation(com.justai.icp.intellectgarbage.annotation.TableExist)")
+    @Pointcut("@annotation(com.example.demo.annotion.TableExist)")
     public void dynamicTable() {
     }
 

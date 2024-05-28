@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.alibaba.fastjson.JSON;
 import com.example.demo.entity.ParamsResource;
 import com.example.demo.entity.RequestParams;
+import com.example.demo.util.AESUtil;
+import com.example.demo.util.HmacUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
