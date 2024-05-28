@@ -19,6 +19,7 @@
         <java.version>1.8</java.version>
         <sentinel.version>1.8.3</sentinel.version>
         <alibaba.seata.version>1.5.1</alibaba.seata.version>
+        <es.bboss.version>7.1.1</es.bboss.version>
     </properties>
 
     <dependencies>
@@ -323,11 +324,11 @@
             <version>2.0.5</version>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.baomidou</groupId>-->
-<!--            <artifactId>mybatis-plus-boot-starter</artifactId>-->
-<!--            <version>3.3.1</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.3.1</version>
+        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>edu.uci.ics</groupId>-->
 <!--            <artifactId>crawler4j</artifactId>-->
@@ -382,11 +383,16 @@
             <version>8.9.0</version>
         </dependency>
 
-        <!-- 发送邮件  -->
+        <!-- 发送邮件(jdk版本高会有问题，请使用com.sun.mail)  -->
+<!--        <dependency>-->
+<!--            <groupId>javax.mail</groupId>-->
+<!--            <artifactId>mail</artifactId>-->
+<!--            <version>1.4.7</version>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4.7</version>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -398,6 +404,25 @@
             <groupId>com.hikvision.ga</groupId>
             <artifactId>artemis-http-client</artifactId>
             <version>1.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.luhuiguo</groupId>
+            <artifactId>aspose-words</artifactId>
+            <version>22.4</version>
+            <type>pom</type>
+        </dependency>
+
+        <!-- 集成es客户端 -->
+        <dependency>
+            <groupId>com.bbossgroups.plugins</groupId>
+            <artifactId>bboss-elasticsearch-rest-jdbc</artifactId>
+            <version>${es.bboss.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bbossgroups.plugins</groupId>
+            <artifactId>bboss-elasticsearch-spring-boot-starter</artifactId>
+            <version>${es.bboss.version}</version>
         </dependency>
     </dependencies>
 

@@ -21,6 +21,11 @@ public class ElectronicInvoiceDTO {
     private String subject;
 
     /**
+     * 电子发票号
+     */
+    private String electronicInvoiceNo;
+
+    /**
      * 发票抬头
      */
     private String invoiceNo;

@@ -1,0 +1,214 @@
+<properties>
+    <property name="create">
+        <![CDATA[{
+            "settings": {
+                 "index": {
+                        "number_of_shards": 3,
+                        "number_of_replicas": 2,
+                        "refresh_interval": "5s"
+                            }
+                          },
+             "mappings": {
+                "properties": {
+                  "id": {
+                    "type": "keyword"
+                  },
+                  "deviceId": {
+                    "type": "keyword"
+                  },
+                  "alarmTime": {
+                    "type": "keyword"
+                  },
+                  "alarmType": {
+                    "type": "keyword"
+                  },
+                  "createTime": {
+                    "type": "date",
+                    "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+                  },
+                  "alarmDataContent": {
+                    "type": "text"
+                  },
+                  "alarmContent": {
+                    "type": "text"
+                  },
+                   "typeCode": {
+                    "type": "text"
+                  },
+                   "typeName": {
+                    "type": "text"
+                  },
+                  "deviceCode": {
+                    "type": "keyword"
+                  },
+                  "deviceName": {
+                    "type": "text",
+	        			"fields": {
+	        				"keyword": {
+	        					"type": "keyword",
+	        					"ignore_above": 256
+	        				}
+	        			}
+                  },
+                  "productName": {
+                    "type": "text",
+	        			"fields": {
+	        				"keyword": {
+	        					"type": "keyword",
+	        					"ignore_above": 256
+	        				}
+	        			}
+                  },
+                  "alarmTypeName": {
+                    "type": "text",
+	        			"fields": {
+	        				"keyword": {
+	        					"type": "keyword",
+	        					"ignore_above": 256
+	        				}
+	        			}
+                  },
+                  "pushResult": {
+                    "type": "text",
+	        			"fields": {
+	        				"keyword": {
+	        					"type": "keyword",
+	        					"ignore_above": 256
+	        				}
+	        			}
+                  },
+                  "pushTime": {
+                    "type": "date",
+                    "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+                  },
+                  "productId": {
+                    "type": "keyword"
+                  },
+                  "statusCode":{
+                    "type": "integer"
+                  },
+                  "eventType":{
+                    "type": "text"
+                  },
+                  "imgUrl":{
+                    "type": "text"
+                  }
+                }
+            }
+
+    }]]>
+    </property>
+
+    <property name="queryRecordList">
+        <![CDATA[
+        {
+            "query":{
+                "bool":{
+                    "filter": [
+                        #if($id){
+                            "term": {
+                                "id.keyword": #[id]
+                            }
+                        },
+                        #end
+                        #if($deviceId){
+                            "term": {
+                                "deviceId.keyword": #[deviceId]
+                            }
+                        },
+                        #end
+                        #if($alarmTime){
+                            "term": {
+                                "alarmTime.keyword": #[alarmTime]
+                            }
+                        },
+                        #end
+                        #if($alarmType){
+                            "term": {
+                                "alarmType.keyword": #[alarmType]
+                            }
+                        },
+                        #end
+                        #if($createTime){
+                            "term": {
+                                "createTime": #[createTime]
+                            }
+                        },
+                        #end
+                        #if($alarmDataContent){
+                            "term": {
+                                "alarmDataContent": #[alarmDataContent]
+                            }
+                        },
+                        #end
+                        #if($alarmContent){
+                            "term": {
+                                "alarmContent": #[alarmContent]
+                            }
+                        },
+                        #end
+                        #if($typeCode){
+                            "term": {
+                                "alarmContent": #[typeCode]
+                            }
+                        },
+                        #end
+                        #if($typeName){
+                            "term": {
+                                "alarmContent": #[typeName]
+                            }
+                        },
+                        #end
+                        #if($deviceCode){
+                            "term": {
+                                "deviceCode.keyword": #[deviceCode]
+                            }
+                        },
+                        #end
+                        #if($deviceName){
+                            "term": {
+                                "deviceName.keyword": #[deviceName]
+                            }
+                        },
+                        #end
+                        #if($productId){
+                            "term": {
+                                "productId.keyword": #[productId]
+                            }
+                        },
+                        #end
+                        #if($productName){
+                            "term": {
+                                "productName.keyword": #[productName]
+                            }
+                        },
+                        #end
+                        #if($alarmTypeName){
+                            "term": {
+                                "alarmTypeName.keyword": #[alarmTypeName]
+                            }
+                        },
+                        #end
+                        #if($pushResult){
+                            "term": {
+                                "pushResult": #[pushResult]
+                            }
+                        },
+                        #end
+                        #if($pushTime){
+                            "term": {
+                                "pushTime.keyword": #[pushTime]
+                            }
+                        },
+                        #end
+                         {
+                                "bool": {}  ## 未发现类似于mybatis的<where>标签，所以这里加一个默认查询条件
+                        }
+                    ]
+                }
+            }
+        }
+        ]]>
+    </property>
+
+</properties>

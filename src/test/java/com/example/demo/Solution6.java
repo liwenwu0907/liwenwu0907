@@ -1,9 +1,19 @@
 package com.example.demo;
 
+import com.example.demo.entity.CustomFunction;
 import com.example.demo.entity.ListNode;
+import com.example.demo.entity.TreeNode;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -1046,8 +1056,8 @@ public class Solution6 {
      */
     public boolean checkIfExist(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
-            for(int j = i + 1; j < arr.length; j++){
-                if(arr[i] == 2 * arr[j] || 2 * arr[i] == arr[j]){
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] == 2 * arr[j] || 2 * arr[i] == arr[j]) {
                     return true;
                 }
             }
@@ -1063,11 +1073,11 @@ public class Solution6 {
      */
     public int countNegatives(int[][] grid) {
         int count = 0;
-        for(int i = 0; i < grid.length; i++){
-            for(int j = grid[0].length - 1; j >= 0; j--){
-                if(grid[i][j] < 0){
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = grid[0].length - 1; j >= 0; j--) {
+                if (grid[i][j] < 0) {
                     count++;
-                }else {
+                } else {
                     break;
                 }
             }
@@ -1088,32 +1098,333 @@ public class Solution6 {
      * 按照 1 的个数排序得到的结果数组为 [0,1,2,4,8,3,5,6,7]
      */
     public static int[] sortByBits(int[] arr) {
-        Map<Integer,Integer> outerMap = new HashMap<>();
-        for (int i = 0; i < arr.length; i++){
+        Map<Integer, Integer> outerMap = new HashMap<>();
+        for (int i = 0; i < arr.length; i++) {
             int num = arr[i];
             int count = 0;
-            while (num != 0){
+            while (num != 0) {
                 count += num % 2;
                 num = num / 2;
             }
-            outerMap.put(i,count);
+            outerMap.put(i, count);
         }
         List<Integer> keyList = outerMap.entrySet().stream().sorted((o1, o2) -> {
-            if(Objects.equals(o1.getValue(), o2.getValue())){
+            if (Objects.equals(o1.getValue(), o2.getValue())) {
                 return arr[o1.getKey()] - arr[o2.getKey()];
-            }else {
+            } else {
                 return o1.getValue() - o2.getValue();
             }
         }).map(Map.Entry::getKey).collect(Collectors.toList());
         int[] result = new int[arr.length];
-        for(int i = 0; i < arr.length; i++){
+        for (int i = 0; i < arr.length; i++) {
             result[i] = arr[keyList.get(i)];
         }
         return result;
     }
 
+    /**
+     * 请你编写一个程序来计算两个日期之间隔了多少天。
+     * 日期以字符串形式给出，格式为 YYYY-MM-DD，如示例所示。
+     */
+    public static int daysBetweenDates(String date1, String date2) {
+        LocalDate localDate1 = LocalDate.parse(date1, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate localDate2 = LocalDate.parse(date2, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return localDate2.until(localDate1).getDays();
+//        return (int) ChronoUnit.DAYS.between(localDate2,localDate1);
+    }
 
-    public static void main(String[] args) {
+    /**
+     * 给你一个数组 nums，对于其中每个元素 nums[i]，请你统计数组中比它小的所有数字的数目。
+     * 换而言之，对于每个 nums[i] 你必须计算出有效的 j 的数量，其中 j 满足 j != i 且 nums[j] < nums[i] 。
+     * 以数组形式返回答案。
+     *
+     * @param nums
+     * @return
+     */
+    public int[] smallerNumbersThanCurrent(int[] nums) {
+        int[] cnt = new int[101];
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            cnt[nums[i]]++;
+        }
+        for (int i = 1; i <= 100; i++) {
+            cnt[i] += cnt[i - 1];
+        }
+        int[] ret = new int[n];
+        for (int i = 0; i < n; i++) {
+            ret[i] = nums[i] == 0 ? 0 : cnt[nums[i] - 1];
+        }
+        return ret;
+
+    }
+
+    /**
+     * 给你一个整数 n，请你返回一个含 n 个字符的字符串，其中每种字符在该字符串中都恰好出现 奇数次 。
+     * 返回的字符串必须只含小写英文字母。如果存在多个满足题目要求的字符串，则返回其中任意一个即可。
+     * 输入：n = 4
+     * 输出："pppz"
+     * 解释："pppz" 是一个满足题目要求的字符串，因为 'p' 出现 3 次，且 'z' 出现 1 次。当然，还有很多其他字符串也满足题目要求，比如："ohhh" 和 "love"。
+     */
+    public String generateTheString(int n) {
+        if(n == 1){
+            return "a";
+        }
+        int num = n;
+        StringBuilder stringBuilder = new StringBuilder();
+        if (n % 2 == 0) {
+            num -= 1;
+            stringBuilder.append("a");
+        } else {
+            num -= 2;
+            stringBuilder.append("ab");
+        }
+        for (int i = 0; i < num; i++) {
+            stringBuilder.append("c");
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 给你两棵二叉树，原始树 original 和克隆树 cloned，以及一个位于原始树 original 中的目标节点 target。
+     * 其中，克隆树 cloned 是原始树 original 的一个 副本 。
+     * 请找出在树 cloned 中，与 target 相同 的节点，并返回对该节点的引用（在 C/C++ 等有指针的语言中返回 节点指针，其他语言返回节点本身）。
+     * 注意：你 不能 对两棵二叉树，以及 target 节点进行更改。只能 返回对克隆树 cloned 中已有的节点的引用。
+     */
+//    public final TreeNode getTargetCopy(final TreeNode original, final TreeNode cloned, final TreeNode target) {
+//
+//    }
+
+    /**
+     * 给你一个字符串 s，请你对 s 的子串进行检测。
+     *
+     * 每次检测，待检子串都可以表示为 queries[i] = [left, right, k]。我们可以 重新排列 子串 s[left], ..., s[right]，并从中选择 最多 k 项替换成任何小写英文字母。
+     *
+     * 如果在上述检测过程中，子串可以变成回文形式的字符串，那么检测结果为 true，否则结果为 false。
+     *
+     * 返回答案数组 answer[]，其中 answer[i] 是第 i 个待检子串 queries[i] 的检测结果。
+     *
+     * 注意：在替换时，子串中的每个字母都必须作为 独立的 项进行计数，也就是说，如果 s[left..right] = "aaa" 且 k = 2，我们只能替换其中的两个字母。（另外，任何检测都不会修改原始字符串 s，可以认为每次检测都是独立的）
+     * 输入：s = "abcda", queries = [[3,3,0],[1,2,0],[0,3,1],[0,3,2],[0,4,1]]
+     * 输出：[true,false,false,true,true]
+     * 解释：
+     * queries[0] : 子串 = "d"，回文。
+     * queries[1] : 子串 = "bc"，不是回文。
+     * queries[2] : 子串 = "abcd"，只替换 1 个字符是变不成回文串的。
+     * queries[3] : 子串 = "abcd"，可以变成回文的 "abba"。 也可以变成 "baab"，先重新排序变成 "bacd"，然后把 "cd" 替换为 "ab"。
+     * queries[4] : 子串 = "abcda"，可以变成回文的 "abcba"。
+     */
+    public static List<Boolean> canMakePaliQueries(String s, int[][] queries) {
+//        List<Boolean> result = new ArrayList<>();
+//        for(int i = 0; i < queries.length; i++){
+//            boolean flag = false;
+//            int[] numbers = queries[i];
+//            int left = numbers[0];
+//            int right = numbers[1];
+//            int k = numbers[2];
+//            //截取的字符
+//            String str = s.substring(left,right + 1);
+//            //不同字符的存放数组
+//            Set<Character> set = new HashSet<>();
+//            for (int p = 0; p < str.length(); p++) {
+//                set.add(str.charAt(p));
+//            }
+//            //看一下有多少不同的小写字符，因为可以调整顺序所以 k >= set.size / 2就为回文
+//            if(set.size() == 1){
+//                flag = true;
+//            }
+//            if(k >= set.size() / 2){
+//                flag = true;
+//            }
+//            if(str.length() % 2 == 1 && set.size() - k >= set.size() / 2 - 1){
+//                flag = true;
+//            }
+//            result.add(flag);
+//        }
+//        return result;
+        //统计每一个字母的奇偶性。出现偶数次的字母，可以对称放在字符串两侧，构成回文串，剩下的出现奇数次字母配对后，还会剩余，需要从中选择最多 k 项替换成任何小写英文字母。
+        int n = s.length();
+        int[] count = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            count[i + 1] = count[i] ^ (1 << (s.charAt(i) - 'a'));
+        }
+        List<Boolean> res = new ArrayList<>();
+        for (int i = 0; i < queries.length; i++) {
+            int l = queries[i][0], r = queries[i][1], k = queries[i][2];
+            int bits = 0, x = count[r + 1] ^ count[l];
+            while (x > 0) {
+                x &= x - 1;
+                bits++;
+            }
+            res.add(bits <= k * 2 + 1);
+        }
+        return res;
+    }
+
+    /**
+     * 如果出现下述两种情况，交易 可能无效：
+     *
+     * 交易金额超过 $1000
+     * 或者，它和 另一个城市 中 同名 的另一笔交易相隔不超过 60 分钟（包含 60 分钟整）
+     * 给定字符串数组交易清单 transaction 。每个交易字符串 transactions[i] 由一些用逗号分隔的值组成，这些值分别表示交易的名称，时间（以分钟计），金额以及城市。
+     *
+     * 返回 transactions，返回可能无效的交易列表。你可以按 任何顺序 返回答案。
+     * 输入：transactions = ["alice,20,800,mtv","alice,50,100,beijing"]
+     * 输出：["alice,20,800,mtv","alice,50,100,beijing"]
+     * 解释：第一笔交易是无效的，因为第二笔交易和它间隔不超过 60 分钟、名称相同且发生在不同的城市。同样，第二笔交易也是无效的。
+     */
+    public List<String> invalidTransactions(String[] transactions) {
+//        List<String> result = new ArrayList<>();
+//        List<Map<String,String>> list = new ArrayList<>();
+//        for(String transaction : transactions){
+//            String[] array = transaction.split(",");
+//            String name = array[0];
+//            String time = array[1];
+//            String money = array[2];
+//            String city = array[3];
+//            Map<String,String> map = new HashMap<>();
+//            map.put("name",name);
+//            map.put("time",time);
+//            map.put("money",money);
+//            map.put("city",city);
+//            if(Integer.parseInt(money) > 1000){
+//                result.add(transaction);
+//            }
+//            list.add(map);
+//        }
+//        list.sort(Comparator.comparingInt(e -> Integer.parseInt(e.get("time"))));
+//        Map<String,String> lastMap = null;
+//        for(Map<String,String> map : list){
+//            if(null != lastMap){
+//                if(Integer.parseInt(map.get("time")) - Integer.parseInt(lastMap.get("time")) <= 60 && !lastMap.get("city").equals(map.get("city")) && map.get("name").equals(lastMap.get("name"))){
+//                    //将上一次和这次的都置为无效
+//                    StringBuilder stringBuilder = new StringBuilder();
+//                    stringBuilder.append(map.get("name")).append(",").append(map.get("time")).append(",").append(map.get("money")).append(",").append(map.get("city"));
+//                    result.add(stringBuilder.toString());
+//                    stringBuilder.delete(0,stringBuilder.length());
+//                    stringBuilder.append(lastMap.get("name")).append(",").append(lastMap.get("time")).append(",").append(lastMap.get("money")).append(",").append(lastMap.get("city"));
+//                    result.add(stringBuilder.toString());
+//                }
+//            }
+//            lastMap = map;
+//        }
+//        return result;
+        int len = transactions.length;
+        String[][] infos = new String[len][4];
+        Map<String, List<Integer>> map = new HashMap<>();
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < len; i++) {
+            infos[i] = transactions[i].split(",");
+            String name = infos[i][0], time = infos[i][1], amount = infos[i][2], city = infos[i][3];
+            if (Integer.parseInt(amount) > 1000) {
+                set.add(i);
+            }
+            List<Integer> sameNames = map.getOrDefault(name, new ArrayList<>());
+            for (int sameName : sameNames) {
+                String[] info = infos[sameName];
+                if (!info[3].equals(city) && Math.abs(Integer.parseInt(info[1]) - Integer.parseInt(time)) <= 60) {
+                    set.add(sameName);
+                    set.add(i);
+                }
+            }
+            sameNames.add(i);
+            map.put(name, sameNames);
+        }
+        List<String> ans = new ArrayList<>();
+        for (int index : set) {
+            ans.add(transactions[index]);
+        }
+        return ans;
+    }
+
+    /**
+     * 给定一个字符串数组 arr，字符串 s 是将 arr 的含有 不同字母 的 子序列 字符串 连接 所得的字符串。
+     * 请返回所有可行解 s 中最长长度。
+     * 子序列 是一种可以从另一个数组派生而来的数组，通过删除某些元素或不删除元素而不改变其余元素的顺序。
+     * 输入：arr = ["un","iq","ue"]
+     * 输出：4
+     * 解释：所有可能的串联组合是：
+     * - ""
+     * - "un"
+     * - "iq"
+     * - "ue"
+     * - "uniq" ("un" + "iq")
+     * - "ique" ("iq" + "ue")
+     * 最大长度为 4。
+     */
+    public static int maxLength(List<String> arr) {
+        //先找不重复的
+        arr = arr.stream().filter(Solution6::isRepeat).collect(Collectors.toList());
+        List<String> res = new ArrayList<>();
+        for (int i = 0; i < arr.size(); i++) {
+            for (int j = 0; j < res.size(); j++) {
+                if (isRepeat(arr.get(i), res.get(j))) {
+                    res.add(res.get(j) + arr.get(i));
+                }
+            }
+            res.add(arr.get(i));
+        }
+        if (res.isEmpty()) {
+            return 0;
+        }
+        return res.stream().max(Comparator.comparingInt(String::length)).get().length();
+    }
+
+    private static boolean isRepeat(String str){
+        int[] nums = new int[26];
+        for (char chars : str.toCharArray()){
+            if(++nums[chars - 'a'] > 1){
+                return false;
+            }
+        }
+        return true;
+    }
+    private static boolean isRepeat(String a1, String a2) {
+        if (a1.length() == 0 || a2.length() == 0) {
+            return true;
+        }
+        for (int i = 0; i < a1.length(); i++) {
+            if (a2.indexOf(a1.charAt(i)) != -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 给你一个函数  f(x, y) 和一个目标结果 z，函数公式未知，请你计算方程 f(x,y) == z 所有可能的正整数 数对 x 和 y。满足条件的结果数对可以按任意顺序返回。
+     * 尽管函数的具体式子未知，但它是单调递增函数，也就是说：
+     * f(x, y) < f(x + 1, y)
+     * f(x, y) < f(x, y + 1)
+     * @param customfunction
+     * @param z
+     * @return
+     */
+    public List<List<Integer>> findSolution(CustomFunction customfunction, int z) {
+        List<List<Integer>> ans = new ArrayList<>();
+        for(int x = 0; x < 1000; x++){
+            for(int y = 0; y < 1000; y++){
+                if(customfunction.f(x,y) == z){
+                    List<Integer> pair = new ArrayList<>();
+                    pair.add(x);
+                    pair.add(y);
+                    ans.add(pair);
+                }
+            }
+        }
+        return ans;
+    }
+
+    public static void main(String[] args) throws IOException {
+        List<String> list = new ArrayList<>();
+        list.add("un");
+        list.add("iq");
+        list.add("ue");
+        System.out.println(maxLength(list));
+        System.out.println(canMakePaliQueries("abcda",new int[][]{{3,3,0},{1,2,0},{0,3,1},{0,3,2},{0,4,1}}));
+        System.out.println(daysBetweenDates("2024-02-05", "2024-02-06"));
+//        Path filePath1 = Files.createFile(new File("E:\\file14184927028261415611.txt").toPath());
+//        Files.write(filePath1,"aaaaaaaaaaaa".getBytes(StandardCharsets.UTF_8));
+
 //        System.out.println(sortByBits(new int[]{1024,512,256,128,64,32,16,8,4,2,1}));
 //        System.out.println(numberOfSteps(8));
         ZoneId zoneId = ZoneId.systemDefault();

@@ -315,7 +315,7 @@ public class Solution2 {
     /**
      * 给你二叉树的根节点 root ，返回它节点值的 前序 遍历。
      */
-    public List<Integer> preorderTraversal(TreeNode root) {
+    public static List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList<>();
         if (null != root) {
             list.add(root.val);

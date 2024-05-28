@@ -23,7 +23,7 @@ public class ElectronicInvoiceServiceImpl {
 
     public static void main(String[] args) throws Exception {
         String userHome = System.getProperty("user.home");
-        String xls = "新希望-电子发票邮件发送.xlsx";
+        String xls = "2月新希望发票邮件发送.xlsx";
         if (args.length > 0) {
             xls = args[0];
         }
@@ -49,6 +49,8 @@ public class ElectronicInvoiceServiceImpl {
                 String content = electronicInvoiceDTO.getPrefix() + (StringUtils.isNotBlank(electronicInvoiceDTO.getAddress()) ? electronicInvoiceDTO.getAddress() : "") + "  " + (StringUtils.isNotBlank(electronicInvoiceDTO.getSuffix()) ? electronicInvoiceDTO.getSuffix() : "");
                 //根据抬头找需要发送的文件
                 List<File> fileList = search(new File("C:\\Users\\liwenwu\\新希望附件"),electronicInvoiceDTO.getInvoiceNo());
+                List<File> fileList2 = search(new File("C:\\Users\\liwenwu\\新希望附件\\电子发票"),electronicInvoiceDTO.getElectronicInvoiceNo());
+                fileList.addAll(fileList2);
                 if(CollectionUtils.isEmpty(fileList)){
                     content = content.replace("数电专票3个格式文件见附件，请按需下载。","");
                 }
@@ -96,17 +98,21 @@ public class ElectronicInvoiceServiceImpl {
             electronicInvoiceDTO.setSubject(cell2.getStringCellValue());
             Cell cell3 = row.getCell(3);
             if(null != cell3){
-                electronicInvoiceDTO.setInvoiceNo(cell3.getStringCellValue());
+                electronicInvoiceDTO.setElectronicInvoiceNo(cell3.getStringCellValue());
             }
             Cell cell4 = row.getCell(4);
-            electronicInvoiceDTO.setPrefix(cell4.getStringCellValue());
-            Cell cell5 = row.getCell(5);
-            if(null != cell5){
-                electronicInvoiceDTO.setAddress(cell5.getStringCellValue());
+            if(null != cell4){
+                electronicInvoiceDTO.setInvoiceNo(cell4.getStringCellValue());
             }
+            Cell cell5 = row.getCell(5);
+            electronicInvoiceDTO.setPrefix(cell5.getStringCellValue());
             Cell cell6 = row.getCell(6);
             if(null != cell6){
-                electronicInvoiceDTO.setSuffix(cell6.getStringCellValue());
+                electronicInvoiceDTO.setAddress(cell6.getStringCellValue());
+            }
+            Cell cell7 = row.getCell(7);
+            if(null != cell7){
+                electronicInvoiceDTO.setSuffix(cell7.getStringCellValue());
             }
             list.add(electronicInvoiceDTO);
         }
@@ -119,13 +125,15 @@ public class ElectronicInvoiceServiceImpl {
             File[] files = directory.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    String fileName = file.getName();
-                    //第一个_和第二个_之间为发票号
-                    String[] nameArray = fileName.split("_");
-                    String name = nameArray[1];
-                    if (name.equals(targetFileName)) {
-                        // 找到目标文件
-                        list.add(file);
+                    if(!file.isDirectory()){
+                        String fileName = file.getName();
+                        //第一个_和第二个_之间为发票号
+                        String[] nameArray = fileName.split("_");
+                        String name = nameArray[1];
+                        if (name.equals(targetFileName)) {
+                            // 找到目标文件
+                            list.add(file);
+                        }
                     }
                 }
             }

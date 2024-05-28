@@ -14,7 +14,8 @@
 //import org.springframework.core.io.ResourceLoader;
 //import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 //import org.springframework.stereotype.Component;
-//
+//import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+//import org.springframework.context.annotation.Bean;
 //import javax.annotation.Resource;
 //import javax.sql.DataSource;
 //import java.util.List;
@@ -58,7 +59,11 @@
 //        proxy.setTargetDataSources(targetDataSource);
 //        return proxy;
 //    }
-//
+//@Bean
+//@ConditionalOnMissingBean //有此实例便不进行注册
+//public QueryInterceptor dataScopeInterceptor() {
+//        return new QueryInterceptor();
+//        }
 //
 //
 //

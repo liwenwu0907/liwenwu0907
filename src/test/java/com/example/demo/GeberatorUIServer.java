@@ -7,9 +7,9 @@ import com.github.davidfantasy.mybatisplus.generatorui.mbp.NameConverter;
 public class GeberatorUIServer {
 
     public static void main(String[] args) {
-        GeneratorConfig config = GeneratorConfig.builder().jdbcUrl("jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC")
+        GeneratorConfig config = GeneratorConfig.builder().jdbcUrl("jdbc:mysql://10.10.77.246:33306/iot_cloud?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC")
                 .userName("root")
-                .password("ok123")
+                .password("dc3")
                 .driverClassName("com.mysql.cj.jdbc.Driver")
                 //数据库schema，MSSQL,PGSQL,ORACLE,DB2类型的数据库需要指定
 //                .schemaName("myBusiness")
@@ -44,7 +44,7 @@ public class GeberatorUIServer {
                     }
                 })
                 //所有生成的java文件的父包名，后续也可单独在界面上设置
-                .basePackage("com.github.davidfantasy.mybatisplustools.example")
+                .basePackage("com.justai.icp.intellectgarbage")
                 .port(8068)
                 .build();
         MybatisPlusToolsApplication.run(config);

@@ -17,8 +17,36 @@ mybatis:
 
 spring:
   elasticsearch:
-    rest:
-      uris: http://123.207.210.78:9200
+    bboss:
+      icp-view:
+        name: iot-es
+        elasticUser:
+        elasticPassword:
+        elasticsearch:
+          rest:
+            hostNames: 123.207.210.78:9200
+          dateFormat: yyyy.MM.dd HH:mm:ss
+          timeZone: Asia/Shanghai
+          showTemplate: true
+          discoverHost: false
+        dslfile:
+          refreshInterval: -1
+        http:
+          timeoutConnection: 5000
+          timeoutSocket: 5000
+          connectionRequestTimeout: 5000
+          retryTime: 1
+          maxLineLength: -1
+          maxHeaderCount: 200
+          maxTotal: 400
+          defaultMaxPerRoute: 200
+          soReuseAddress: false
+          soKeepAlive: false
+          timeToLive: 3600000
+          keepAlive: 3600000
+          keystore:
+          keyPassword:
+          hostnameVerifier:
   redis:
     redisson:
       config: classpath:redisson.yml
