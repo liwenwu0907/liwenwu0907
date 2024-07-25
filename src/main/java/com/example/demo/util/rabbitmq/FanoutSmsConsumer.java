@@ -14,15 +14,15 @@ import java.io.UnsupportedEncodingException;
 public class FanoutSmsConsumer {
     Logger logger = LoggerFactory.getLogger(FanoutSmsConsumer.class);
 
-    @RabbitListener(queues = "topic_sms_queue")
-    @RabbitHandler
-    public void process(Message massage) throws UnsupportedEncodingException {
-        String id = massage.getMessageProperties().getMessageId();
-        String msg = new String(massage.getBody(), "UTF-8");
-        JSONObject jsonObject = JSONObject.parseObject(msg);
-        Integer taskid = jsonObject.getInteger("taskId");
-        logger.info("消費者1：taskId:" + taskid);
-    }
+//    @RabbitListener(queues = "topic_sms_queue")
+//    @RabbitHandler
+//    public void process(Message massage) throws UnsupportedEncodingException {
+//        String id = massage.getMessageProperties().getMessageId();
+//        String msg = new String(massage.getBody(), "UTF-8");
+//        JSONObject jsonObject = JSONObject.parseObject(msg);
+//        Integer taskid = jsonObject.getInteger("taskId");
+//        logger.info("消費者1：taskId:" + taskid);
+//    }
 //
 //    @RabbitListener(queues = "topic_sms_queue")
 //    @RabbitHandler

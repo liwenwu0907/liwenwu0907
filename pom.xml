@@ -396,6 +396,12 @@
             <artifactId>bboss-elasticsearch-spring-boot-starter</artifactId>
             <version>${es.bboss.version}</version>
         </dependency>
+        <!--flowable-->
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-starter</artifactId>
+            <version>6.7.2</version>
+        </dependency>
     </dependencies>
 
     <build>

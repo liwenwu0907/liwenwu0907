@@ -7,9 +7,9 @@ import com.github.davidfantasy.mybatisplus.generatorui.mbp.NameConverter;
 public class GeberatorUIServer {
 
     public static void main(String[] args) {
-        GeneratorConfig config = GeneratorConfig.builder().jdbcUrl("jdbc:mysql://10.10.77.246:33306/iot_cloud?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC")
+        GeneratorConfig config = GeneratorConfig.builder().jdbcUrl("jdbc:mysql://10.10.77.248:3306/icp-garbage?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC")
                 .userName("root")
-                .password("dc3")
+                .password("Zkcsdn_ops123.")
                 .driverClassName("com.mysql.cj.jdbc.Driver")
                 //数据库schema，MSSQL,PGSQL,ORACLE,DB2类型的数据库需要指定
 //                .schemaName("myBusiness")

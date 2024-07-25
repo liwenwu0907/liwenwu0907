@@ -26,11 +26,11 @@ public class AtomicReferenceTest {
         list.add("2");
         List<String> names = Arrays.asList("Larry", "Steve", "James");
         List result = names.stream().filter(s -> !s.contains("L")).collect(Collectors.toList());
-        System.out.println(result);
-        names.forEach(System.out::println);
+//        System.out.println(result);
+//        names.forEach(System.out::println);
         Set<String> namesSet = new HashSet<>(Arrays.asList("Larry", "Steve", "James"));
         Queue<String> namesQueue = new LinkedBlockingQueue<>(Arrays.asList("Larry", "Steve", "James"));
-        namesSet.forEach(System.out::println);
+//        namesSet.forEach(System.out::println);
         namesQueue.forEach(System.out::println);
         List<String> list2 = new ArrayList<>();
         list2.add("1");

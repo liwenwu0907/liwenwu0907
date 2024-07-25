@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -56,7 +58,7 @@ public class TwinsLockTest {
     }
 
     @Test
-    public void completableFuture() throws ExecutionException, InterruptedException {
+    public static void completableFuture() {
         CompletableFuture<String> task1 =
                 CompletableFuture.supplyAsync(()->{
                     //自定义业务操作
@@ -77,10 +79,43 @@ public class TwinsLockTest {
                     }
                     return "2";
                 });
-//        CompletableFuture<Void> headerFuture = CompletableFuture.allOf(task1,task6);
-        CompletableFuture<Object> headerFuture = CompletableFuture.anyOf(task1,task6);
+        CompletableFuture<Void> headerFuture = CompletableFuture.allOf(task1,task6);
+//        CompletableFuture<Object> headerFuture = CompletableFuture.anyOf(task1,task6);
         Object object = headerFuture.join();
         System.out.println(JSON.toJSONString(object));
+    }
+
+    public static void main(String[] args) {
+//        completableFuture();
+//        ExecutorService executorService = Executors.newSingleThreadExecutor();
+//        executorService.submit(thread1);
+//        executorService.submit(thread2);
+//        executorService.submit(thread3);
+//        executorService.shutdown();
+
+        final Thread thread1 = new Thread(()-> {
+            System.out.println("1");
+        });
+        final Thread thread2 = new Thread(()-> {
+            try {
+                thread1.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("2");
+        });
+        final Thread thread3 = new Thread(()-> {
+            try {
+                thread2.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("3");
+        });
+        thread1.start();
+        thread2.start();
+        thread3.start();
+
     }
 
 }
