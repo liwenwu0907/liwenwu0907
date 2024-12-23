@@ -64,7 +64,7 @@ spring:
       password: ok123
       driverClassName: com.mysql.jdbc.Driver
     write:
-      url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&nullCatalogMeansCurrent=true
+      url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true
       username: root
       password: ok123
       driverClassName: com.mysql.jdbc.Driver
@@ -98,3 +98,10 @@ mica:
   xss:
     exclude-patterns:
     enabled: true
+
+
+flowable:
+  #解决乱码
+  activity-font-name: "宋体"
+  annotation-font-name: "宋体"
+  label-font-name: "宋体"

@@ -7,7 +7,7 @@ import com.github.davidfantasy.mybatisplus.generatorui.mbp.NameConverter;
 public class GeberatorUIServer {
 
     public static void main(String[] args) {
-        GeneratorConfig config = GeneratorConfig.builder().jdbcUrl("jdbc:mysql://10.10.77.248:3306/icp-garbage?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC")
+        GeneratorConfig config = GeneratorConfig.builder().jdbcUrl("jdbc:mysql://10.10.77.248:3306/icp-assess?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC")
                 .userName("root")
                 .password("Zkcsdn_ops123.")
                 .driverClassName("com.mysql.cj.jdbc.Driver")

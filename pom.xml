@@ -20,6 +20,7 @@
         <sentinel.version>1.8.3</sentinel.version>
         <alibaba.seata.version>1.5.1</alibaba.seata.version>
         <es.bboss.version>7.1.1</es.bboss.version>
+        <flowable.version>6.7.2</flowable.version>
     </properties>
 
     <dependencies>
@@ -400,7 +401,7 @@
         <dependency>
             <groupId>org.flowable</groupId>
             <artifactId>flowable-spring-boot-starter</artifactId>
-            <version>6.7.2</version>
+            <version>${flowable.version}</version>
         </dependency>
     </dependencies>
 
